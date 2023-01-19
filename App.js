@@ -18,6 +18,10 @@ export default function App() {
   const obstacleHeight = 300
   const gap = 200
 
+  const [obstaclesLeftTwo, setObstaclesLeftTwo] = useState(screenWidth + screenWidth/2)
+  let obstaclesLeftTimerIdTwo
+
+  let color
   //console.log(screenHeight)
   //console.log(screenWidth)
 
@@ -45,12 +49,26 @@ export default function App() {
       return () => {
         clearInterval(obstaclesLeftTimerId)
       }
-
-    }
-
-
-
+      } else {
+        setObstaclesLeft(screenWidth)
+      }
   }, [obstaclesLeft])
+
+//start second obstacles
+  useEffect(() => {
+    if (obstaclesLeftTwo > -obstacleWidth) {
+      obstaclesLeftTimerIdTwo = setInterval(() => {
+        setObstaclesLeftTwo(obstaclesLeftTwo => obstaclesLeftTwo - 5)
+      }, 30)
+
+      return () => {
+        clearInterval(obstaclesLeftTimerIdTwo)
+      }
+      } else {
+        setObstaclesLeftTwo(screenWidth)
+      }
+  }, [obstaclesLeftTwo])
+
 
   return (
     <View style={styles.container}>
@@ -58,12 +76,19 @@ export default function App() {
           birdBottom={birdBottom}
           birdLeft={birdLeft}
         />
-
       <Obstacles
+        color = {'green'}
         obstacleWidth = {obstacleWidth}
         obstacleHeight={obstacleHeight}
         gap = {gap}
         obstaclesLeft={obstaclesLeft}
+      />
+      <Obstacles
+        color = {'yellow'}
+        obstacleWidth = {obstacleWidth}
+        obstacleHeight={obstacleHeight}
+        gap = {gap}
+        obstaclesLeft={obstaclesLeftTwo}
       />
     </View>
   );
