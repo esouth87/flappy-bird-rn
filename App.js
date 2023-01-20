@@ -3,12 +3,15 @@ import { StyleSheet, Text, View, Dimensions, TouchableWithoutFeedback } from 're
 import Bird from './components/bird'
 import Obstacles from './components/Obstacles'
 
-const gameTimerIdRef= useRef(null);
-const obstaclesLeftTimerIdRef = useRef(null);
-const obstaclesLeftTimerIdTwoRef = useRef(null);
+
 
 
 export default function App() {
+  const gameTimerIdRef= useRef(null);
+  const obstaclesLeftTimerIdRef = useRef(null);
+  const obstaclesLeftTimerIdTwoRef = useRef(null);
+
+
   const screenWidth = Dimensions.get("screen").width
   const screenHeight = Dimensions.get("screen").height
 
@@ -100,12 +103,13 @@ useEffect(() => {
     console.log("Collision dick head")
     gameOver()
     }
-  })
+  }, [obstaclesLeft, obstaclesNegHeight, obstaclesLeftTwo, obstaclesNegHeightTwo,
+  birdBottom])
 
   const gameOver = () => {
     clearInterval(gameTimerIdRef.current)
-    clearInterval(obstaclesLeftTimerId.current)
-    clearInterval(obstaclesLeftTimerIdTwo.current)
+    clearInterval(obstaclesLeftTimerIdRef.current)
+    clearInterval(obstaclesLeftTimerIdTwoRef.current)
     setIsGameOver(true)
   }
 
