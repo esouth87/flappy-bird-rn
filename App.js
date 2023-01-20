@@ -8,7 +8,6 @@ export default function App() {
   const obstaclesLeftTimerIdRef = useRef(null);
   const obstaclesLeftTimerIdTwoRef = useRef(null);
 
-
   const screenWidth = Dimensions.get("screen").width
   const screenHeight = Dimensions.get("screen").height
 
@@ -33,16 +32,15 @@ export default function App() {
 
   //start bird falling
   useEffect(() => {
-    if (birdBottom > 0 ) {
-      gameTimerIdRef.current = setInterval(() => {
-        setBirdBottom(birdBottom => birdBottom - gravity)
-      }, 30)
+    let animationFrameId;
+    const animate = () => {
+      setBirdBottom(birdBottom => birdBottom - gravity);
+      animationFrameId = requestAnimationFrame(animate);
+    };
+    animate();
+    return() => cancelAnimationFrame(animationFrameId);
+  }, []);
 
-      return () => {
-        clearInterval(gameTimerIdRef.current)
-      }
-    }
-  }, [birdBottom])
   console.log(birdBottom)
 
 const jump = () => {
