@@ -3,9 +3,6 @@ import { StyleSheet, Text, View, Dimensions, TouchableWithoutFeedback } from 're
 import Bird from './components/bird'
 import Obstacles from './components/Obstacles'
 
-
-
-
 export default function App() {
   const gameTimerIdRef= useRef(null);
   const obstaclesLeftTimerIdRef = useRef(null);
@@ -91,15 +88,16 @@ useEffect(() => {
 
   //check for collisions
   useEffect(() => {
-    if (birdBottom < (obstaclesNegHeight + obstacleHeight + 30) ||//30 is half birdHeight
-    (birdBottom > (obstaclesNegHeight + obstacleHeight + gap -30)) &&
-    (obstaclesLeft > screenWidth/2 -30 && obstaclesLeft < screenWidth/2 + 30)
-    ||
-    (birdBottom < (obstaclesNegHeightTwo + obstacleHeight + 30)) ||//30 is half birdHeight
-    (birdBottom > (obstaclesNegHeightTwo + obstacleHeight + gap -30)) &&
-    (obstaclesLeftTwo > screenWidth/2 -30 && obstaclesLeftTwo < screenWidth/2 + 30)
-    )
-    {
+    if (
+          (birdBottom < (obstaclesNegHeight + obstacleHeight) &&
+          (obstaclesLeft > birdLeft - 30 && obstaclesLeft < birdLeft + 30)) ||
+          (birdBottom > (obstaclesNegHeight + obstacleHeight + gap) &&
+          (obstaclesLeft > birdLeft - 30 && obstaclesLeft < birdLeft + 30)) ||
+          (birdBottom < (obstaclesNegHeightTwo + obstacleHeight) &&
+          (obstaclesLeftTwo > birdLeft - 30 && obstaclesLeftTwo < birdLeft + 30)) ||
+          (birdBottom > (obstaclesNegHeightTwo + obstacleHeight + gap) &&
+          (obstaclesLeftTwo > birdLeft - 30 && obstaclesLeftTwo < birdLeft + 30))
+        ) {
     console.log("Collision dick head")
     gameOver()
     }
